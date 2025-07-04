@@ -1,0 +1,326 @@
+.header {
+    padding: 10px 20px;
+    /* Compact spacing */
+    background: linear-gradient(90deg, #1a1a1a, #2b2b2b);
+    /* Dark Gradient Look */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #ffcc00;
+    /* Premium Highlight */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* Smooth Shadow */
+  }
+
+  .header-area {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .header #Header1 {
+    width: 400px;
+    /* थोड़ा और space */
+  }
+
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffcc00;
+    /* Premium Gold Look */
+    text-transform: uppercase;
+    /* letter-spacing: 1.5px; */
+    text-shadow: 2px 2px 8px rgba(255, 204, 0, 0.4);
+    /* Glow Effect */
+  }
+
+  .header #header-inner h1 a {
+    color: #ffcc00;
+  }
+
+  .header #description {
+    display: none;
+  }
+
+  .header img {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .header .LinkList {
+    width: 100%;
+  }
+
+  .header .LinkList h2 {
+    display: none;
+  }
+
+  .header #menu1 {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    gap: 15px;
+  }
+
+  /* 🏆 Navbar Items */
+  .header li a {
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+  }
+
+  /* 🏆 Submenu */
+  #sub-menu {
+    position: absolute;
+    background: #222;
+    width: 180px;
+    padding: 8px 0;
+    list-style: none;
+    display: none;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 🏆 Submenu Items */
+  .header #sub-menu li {
+    border-bottom: 1px solid #444;
+  }
+
+  .header #sub-menu li a {
+    color: #fff;
+    padding: 10px;
+    display: block;
+    transition: all 0.3s;
+  }
+
+  .header #sub-menu li:hover {
+    background: #a6ff00;
+  }
+
+  .header #sub-menu li:hover a {
+    color: #000;
+  }
+
+  .header a {
+    color: #000;
+    display: block;
+  }
+
+  /* hover */
+  .header li:hover {
+    background: #ffcc00;
+    border-radius: 5px;
+    transform: scale(1.1);
+    /* हल्का zoom effect */
+  }
+
+  .header li:hover a {
+    color: #000;
+    font-weight: bold;
+  }
+
+  #menu1 li a:not(:only-child):after {
+    padding-left: 7px;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    float: right;
+    clear: both;
+  }
+
+  .header .menu-icon,
+  .header .nav-head,
+  .header .phone {
+    display: none;
+  }
+
+  /* 🏆 Search Icon */
+  .header .fa-search {
+    font-size: 25px;
+    color: #ffcc00;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: all 0.3s;
+  }
+
+  .header .fa-search:hover {
+    transform: scale(1.2);
+  }
+
+  #search-box {
+    position: fixed;
+    right: 50%;
+    bottom: 35%;
+    transform: translateX(50%);
+    z-index: 999;
+    display: none;
+    align-items: center;
+    width: 800px;
+    max-width: 100%;
+    background-color: #1a1a1a;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  #search-box input {
+    height: 45px;
+    width: 100%;
+    background-color: #121212;
+    color: #00ffee;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  #search-box input:focus {
+    border-color: #00ffe7;
+    box-shadow: 0 0 10px rgba(0, 255, 231, 0.4);
+  }
+
+  .closebtn {
+    font-size: 35px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    margin-left: 10px;
+  }
+
+  .closebtn:hover {
+    color: #ff4757;
+  }
+
+  @media screen and (min-width: 354px) {
+    .header h1 {
+      font-size: 23px !important;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+  }
+
+  @media screen and (max-width: 800px) {
+    .header {
+      box-sizing: unset;
+    }
+
+    .header {
+      max-height: 52px;
+      height: 35px;
+    }
+
+    .header li:hover {
+      transform: unset;
+    }
+
+    .header .menu-icon {
+      font-size: 30px;
+      display: block;
+      font-weight: 500;
+      cursor: pointer;
+      color: #ffcc00;
+    }
+
+    .header .fa-search {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .header .nav-head {
+      display: block;
+      padding: 1em;
+    }
+
+    .header .menu-close {
+      position: absolute;
+      right: 0;
+      top: 5px;
+      text-align: center;
+      cursor: pointer;
+      color: #002bff;
+      line-height: 0.9;
+      font-size: 50px;
+      i {
+        font-size: 50px;
+      }
+    }
+
+    .nav-head h1 {
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .header-area {
+      display: block;
+      width: 100%;
+    }
+
+    .header #Header1 {
+      width: 100%;
+    }
+
+    .header #Header1 {
+      text-align: center;
+    }
+
+    .header img {
+      width: unset;
+      height: 35px;
+    }
+
+    .header .LinkList {
+      width: 320px;
+      position: fixed;
+      top: 0;
+      background-color: #1e1e1e;
+      left: -500px;
+      z-index: 3;
+      height: 100%;
+      box-sizing: border-box;
+      transition: 0.5s;
+      overflow-y: auto;
+      box-shadow: 0px 0px 35px #9f9f9f;
+    }
+
+    .header #menu1 {
+      display: block;
+      padding: 0;
+    }
+
+    .header #sub-menu {
+      position: relative;
+      width: 100%;
+      box-shadow: none;
+      background: unset;
+      margin-left: 0;
+    }
+
+    .header #sub-menu li a:before {
+      content: "\f105";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+
+    .header #menu1 > li {
+      border-top: 1px solid #f3f3f3;
+      padding-left: 2em;
+    }
+
+    .header #menu > li:last-child {
+      border-bottom: 1px solid #ff00c8 !important;
+    }
+  }

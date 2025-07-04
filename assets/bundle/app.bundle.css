@@ -1,0 +1,94 @@
+:root {
+  --bgc: #1E1E1E;
+  /* Original background color */
+  --txt: #E1E1E1;
+  /* Original text color */
+  --primary: #3498DB;
+  /* Blue for primary elements */
+  --secondary: #E74C3C;
+  /* Red for highlights or accents */
+  --accent: #1ABC9C;
+  /* Mint green for buttons or interactive elements */
+
+  /* Gradient Colors */
+  --gradient-purple: linear-gradient(135deg, #9B59B6, #8E44AD);
+  /* Purple gradient */
+  --gradient-blue: linear-gradient(135deg, #2980B9, #6DD5ED);
+  /* Blue gradient */
+  --gradient-blue-purple: linear-gradient(135deg, #8E44AD, #3498DB);
+  /* Blue-Purple gradient */
+  --gradient-teal: linear-gradient(135deg, #1ABC9C, #16A085);
+  /* Teal gradient */
+  --gradient-orange: linear-gradient(135deg, #F39C12, #E67E22);
+  /* Orange gradient */
+  --gradient-red: linear-gradient(135deg, #E74C3C, #C0392B);
+  /* Red gradient */
+  --gradient-pink: linear-gradient(135deg, #FF6F61, #D66B87);
+  /* Pink gradient */
+  --gradient-indigo: linear-gradient(135deg, #5B2C6F, #8E44AD);
+  /* Indigo gradient */
+
+  /* Gray Tones for Professional Look */
+  --light-gray-bg: #F0F0F0;
+  /* Light gray for input backgrounds */
+  --dark-gray-bg: #4B4B4B;
+  /* Dark gray for hover effects or secondary backgrounds */
+  --light-gray-txt: #D3D3D3;
+  /* Light gray for softer text */
+  --medium-gray-txt: #B0B0B0;
+  /* Medium gray for headings */
+  --dark-gray-txt: #8C8C8C;
+  /* Dark gray for secondary text or details */
+  --link-gray-txt: #A6A6A6;
+  /* Gray for hyperlinks */
+
+  /* Misc Colors */
+  --success: #2ECC71;
+  /* Green for success messages */
+  --warning: #F39C12;
+  /* Orange for warnings */
+  --error: #E74C3C;
+  /* Red for error messages */
+  --info: #3498DB;
+  /* Blue for informational messages */
+
+  /* Additional Colors */
+  --sunny-yellow: #F1C40F;
+  /* Bright yellow for cheerful elements */
+  --deep-orange: #E67E22;
+  /* Deep orange for warm highlights */
+  --ocean-blue: #1F8EF1;
+  /* Bright ocean blue for active elements */
+  --lavender: #E8DAEF;
+  /* Soft lavender for backgrounds or accents */
+  --soft-pink: #FADBD8;
+  /* Soft pink for gentle touches */
+  --mint: #A2D9CE;
+  /* Fresh mint green for accents */
+  --coral: #FF6B61;
+  /* Vibrant coral for interactive elements */
+  --steel-blue: #4682B4;
+  /* Cool steel blue for text and highlights */
+  --gold: #FFD700;
+  /* Gold for luxurious elements */
+
+  /* Purple Shades */
+  --light-purple: #D7B2E3;
+  /* Light purple for softer backgrounds or accents */
+  --medium-purple: #9B59B6;
+  /* Medium purple for primary elements */
+  --dark-purple: #5D0689;
+  /* Dark purple for strong accents */
+  --deep-purple: #5E4B8C;
+  /* Deep purple for rich backgrounds */
+  --lavender-purple: #BFA2D9;
+  /* Soft lavender purple for highlights */
+  --purple-royal: #6A0EAD;
+  /* Royal purple for striking elements */
+
+  /* Neutral Colors */
+  --white: #FFFFFF;
+  /* White color for backgrounds or text */
+  --black: #000000;
+  /* Black color for text or backgrounds */
+}

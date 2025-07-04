@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="color-scheme" content="light only" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Yhg script genrator</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script type="text/javascript" src="yhgquery.js"></script>
+    <script
+      type="text/javascript"
+      src="../assets/bundle/collection.bundle.js"
+    ></script>
+    <script src="../assets/lib/custom/custom.js"></script>
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="../assets/lib/custom/custom.css" />
+    <link rel="stylesheet" href="../assets/fonts/opfonts/style.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <span class="menu-icon"
+        ><i aria-hidden="true" class="fa fa-bars"></i
+      ></span>
+      <div class="header-area section" id="header-area">
+        <div class="widget Header" data-version="1" id="Header1">
+          <div id="header-inner">
+            <div class="titlewrapper">
+              <h1 class="title">
+                <a href="https://yellowhostgaming01.blogspot.com/">
+                  Yellow host gaming
+                </a>
+              </h1>
+            </div>
+            <div class="descriptionwrapper">
+              <p class="description"><span> </span></p>
+            </div>
+          </div>
+        </div>
+        <div class="widget LinkList" data-version="1" id="LinkList3">
+          <h2>Menu</h2>
+          <div class="widget-content">
+            <div class="nav-head">
+              <h1>Yellow host gaming</h1>
+              <span class="menu-close">&#215;</span>
+            </div>
+            <div id="dropmenu">
+              <ul id="menu1">
+                <li>
+                  <a
+                    href="https://youtube.com/@Yellowhostgaming?si=yZ2dC-Cc_YV7EBpw"
+                    >YT Channel</a
+                  >
+                </li>
+                <li>
+                  <a href="https://chat.whatsapp.com/LbOJrGDWGuqLtygEZQU9uj"
+                    >Whatsapp group</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+      <span onclick="openSearch()"><i class="fa fa-search"></i></span>
+    </header>
+    <form action="/search" id="search-box" target="_top">
+      <input name="q" placeholder="Search...." type="search" value="" />
+      <span class="closebtn" onclick="closeSearch()" title="Close search"
+        >&#215;</span
+      >
+    </form>
+    <!--wishing script maker-->
+    <div class="main">
+      <div class="scriptmaker">
+        <div class="ScriptMkr">
+          <form id="Scriptmaker" action="#">
+            <center>
+              <h2>Yhg Post Maker</h2>
+              <hr />
+            </center>
+            <div class="post-title">
+              <label for="">Post Title</label>
+              <input
+                type="text"
+                placeholder="Enter Post title"
+                id="postTitle"
+              />
+              <span></span>
+            </div>
+            <br />
+            <div class="Thumbnail">
+              <label for="">Post Thumbnail:</label>
+
+              <div class="icon-input-wrapper pos-right">
+                <i
+                  class="opf-file_copy opf"
+                  onclick="openImageDialog('Thumbnail')"
+                ></i>
+                <input
+                  type="text"
+                  id="Thumbnail"
+                  placeholder="Enter Thumbnail URL"
+                />
+              </div>
+
+              <span></span>
+            </div>
+
+            <center><h2>Mod Details</h2></center>
+            <div class="mod-details credit">
+              <!-- Creator Section -->
+              <div class="mod-details credit">
+                <label>Creator Section</label>
+                <div id="creator-list"></div>
+                <button type="button" onclick="addGenericCard('creator')">
+                  + Add Creator
+                </button>
+              </div>
+
+              <!-- Allow Contributors -->
+              <div style="margin-top: 10px">
+                <input
+                  type="checkbox"
+                  id="allow-contributors"
+                  onchange="toggleContributors()"
+                />
+                <label for="allow-contributors">Allow Contributors</label>
+              </div>
+
+              <!-- Contributor Section -->
+              <div
+                class="mod-details credit"
+                id="contributor-wrapper"
+                style="display: none"
+              >
+                <label>Contributors</label>
+                <div id="contributor-list"></div>
+                <button onclick="addGenericCard('contributor')" type="button">
+                  + Add Contributor
+                </button>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="mod-details features">
+              <label for="">Mod Features</label><br />
+              <textarea
+                id="Mod-d-features"
+                placeholder="each line represent each features"
+              ></textarea>
+              <span></span>
+            </div>
+            <br />
+
+            <center>
+              <h2>Contect Info</h2>
+            </center>
+
+            <div class="contectInfo youtube">
+              <label for="">Enter your yt Channel</label
+              ><input
+                type="text"
+                placeholder="Emply == yhg yt channel"
+                id="contect-yt"
+              />
+              <span></span>
+            </div>
+            <br />
+
+            <div class="contectInfo instagram">
+              <label for="">Enter your yt Channel</label>
+              <input
+                type="text"
+                id="contect-insta"
+                placeholder="Emply == yhg yt insta"
+              /><span></span>
+            </div>
+            <br />
+
+            <div class="contectInfo email">
+              <label for="">Enter Email</label
+              ><input
+                type="text"
+                id="contect-email"
+                placeholder="Emply == yhg email"
+              /><span></span>
+            </div>
+            <br />
+
+            <center>
+              <h2>Credit with role</h2>
+            </center>
+
+            <div class="mod-details credit-role-generator">
+              <label>Credit with Role Section</label>
+
+              <div id="creditRole-list"></div>
+
+              <button type="button" onclick="addGenericCard('creditRole');">
+                + Add Credit Card
+              </button>
+            </div>
+            <br />
+
+            <div>
+              <label for="">For version</label>
+              <input
+                type="text"
+                id="version"
+                placeholder="Emply == this is livery mod"
+              />
+            </div>
+            <br />
+            <div>
+              <label for="">Password</label>
+              <input
+                type="text"
+                id="Password"
+                placeholder="Emply == in the video"
+              />
+            </div>
+            <br />
+            <div>
+              <label for="">Note(optional):-</label>
+              <input
+                type="text"
+                id="noteOp"
+                placeholder="Emply == this is livery mod"
+              />
+            </div>
+            <br />
+
+            <center><h2>Download Links</h2></center>
+            <div class="downloadLinks">
+              <label for="">VideoLinks</label>
+              <div id="videolink-list"></div>
+              <button type="button" onclick="addGenericCard('videolink')">
+                + Add Video Card
+              </button>
+            </div>
+            <br />
+
+            <div class="downloadLinks">
+              <label for="">Download Links</label>
+              <div id="downloadLink-list"></div>
+              <button type="button" onclick="addGenericCard('downloadLink')">
+                + Add Download Link
+              </button>
+            </div>
+            <br />
+
+            <div>
+              <label for="">Your Name</label>
+              <input type="text" id="creditName" placeholder="empty == yhg" />
+            </div>
+            <br />
+
+            <center>
+              <h2>Extra sections</h2>
+            </center>
+            <div>
+              <label for="">Extra Sections</label>
+              <div id="extraSection-list"></div>
+              <button type="button" onclick="addGenericCard('extraSection')">
+                +Add Section
+              </button>
+            </div>
+            <br />
+            <div class="btn">
+              <input type="reset" value="Clear Form" id="reset" />
+              <input
+                type="button"
+                value="upload post as publish"
+                id="publish"
+                onclick="gapiLoadAndInit()"
+              />
+              <input
+                type="button"
+                value="upload post as archive"
+                id="publishArchive"
+              />
+              <input
+                type="button"
+                value="Create & get Code"
+                id="createHtml"
+              /><br />
+              <input type="button" value="Preview Post" id="preview" />
+              <div class="upload-html" style="display: none">
+                <input
+                  type="button"
+                  value="upload and get url"
+                  id="upload-get-url"
+                /><br />
+                <div class="progress-upload-html" style="display: none">
+                  <progress
+                    value="0"
+                    max="100"
+                    style="display: none"
+                  ></progress>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div
+              id="previewCode"
+              style="
+                border: 1px solid;
+                width: 100%;
+                height: 150px;
+                background-color: white;
+                overflow-y: scroll;
+                color: #000;
+                display: none;
+              "
+              contenteditable
+            ></div>
+            <br />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <!-- Firebase SDK v8 (CDN based) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXwgdo0zLt4QpBt9X-V1R4c8FkOBen-t4",
+      authDomain: "wsmfus.firebaseapp.com",
+      projectId: "wsmfus",
+      storageBucket: "wsmfus.appspot.com",
+      messagingSenderId: "757303413386",
+      appId: "1:757303413386:web:22e3248b5e2be40d3b7b73",
+      measurementId: "G-JQ3YNJX1TY",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+  </script>
+
+  <script src="script.js" defer="defer"></script>
+</html>
