@@ -296,49 +296,49 @@ async function getUploadedThumbnailURL(key) {
 
 
 
-
 const CLIENT_ID = '642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/blogger';
+
+let tokenClient;
 let accessToken = '';
 
 function handleGoogleLogin() {
-  google.accounts.oauth2.initTokenClient({
-    client_id: '642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com',
-    scope: 'https://www.googleapis.com/auth/blogger',
-    callback: (response) => {
-      if (response.access_token) {
-        accessToken = response.access_token;
-        console.log("✅ Access Token:", accessToken);
-        fetchBlogIdFromUrl();
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    prompt: 'consent',
+    callback: (tokenResponse) => {
+      if (tokenResponse.access_token) {
+        accessToken = tokenResponse.access_token;
+        document.getElementById('output').innerText = "✅ Access Token received.";
+        fetchBlogs(); // yahi se kaam aage badhega
       } else {
-        alert("❌ Failed to get access token.");
+        alert('Token not received.');
       }
     },
-  }).requestAccessToken();
+  });
+
+  tokenClient.requestAccessToken();
 }
 
-function fetchBlogIdFromUrl() {
-  const blogUrl = "https://yellowhostgaming01.blogspot.com/";
-
-  fetch(`https://www.googleapis.com/blogger/v3/blogs/byurl?url=${encodeURIComponent(blogUrl)}`, {
+function fetchBlogs() {
+  fetch('https://www.googleapis.com/blogger/v3/users/self/blogs', {
     headers: {
-      Authorization: "Bearer " + accessToken
-    }
+      Authorization: 'Bearer ' + accessToken,
+    },
   })
     .then(res => res.json())
     .then(data => {
-      const blogId = data.id;
-      console.log("🆔 Blog ID:", blogId);
+      console.log("Your Blogs:", data);
+      const blogId = data.items[0].id;
       createPost(blogId);
-    })
-    .catch(err => {
-      console.error("❌ Blog ID fetch error:", err);
     });
 }
 
 function createPost(blogId) {
   const postData = {
-    title: "Test Post from Generator",
-    content: "<p>This post was created using Google Identity Services!</p>",
+    title: "🚀 Test Post via Google Identity Services",
+    content: "<p>This post was published using the new GIS method.</p>",
   };
 
   fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
@@ -351,7 +351,7 @@ function createPost(blogId) {
   })
     .then(res => res.json())
     .then(data => {
-      console.log("📬 Post Created:", data);
-      alert("✅ Post Created! URL: " + data.url);
+      console.log("✅ Post Created:", data);
+      alert("📢 Post created: " + data.url);
     });
 }
