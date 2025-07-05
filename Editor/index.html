@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Yhg script genrator</title>
-    <script src="https://apis.google.com/js/api.js"></script>
-
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type="text/javascript" src="yhgquery.js"></script>
     <script
       type="text/javascript"
@@ -278,7 +277,7 @@
                 type="button"
                 value="upload post as publish"
                 id="publish"
-                onclick="gapiLoadAndInit()"
+                onclick="handleGoogleLogin()"
               />
               <input
                 type="button"

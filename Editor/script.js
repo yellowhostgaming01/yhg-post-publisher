@@ -298,65 +298,60 @@ async function getUploadedThumbnailURL(key) {
 
 
 const CLIENT_ID = '642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/blogger';
+let accessToken = '';
 
-function gapiLoadAndInit() {
-  gapi.load('client:auth2', async () => {
-    await gapi.client.init({
-  clientId: CLIENT_ID,
-  scope: SCOPES,
-});
-
-const authInstance = gapi.auth2.getAuthInstance();
-
-if (!authInstance.isSignedIn.get()) {
-  await authInstance.signIn({ prompt: 'select_account' });
-}
-
-
-    const user = authInstance.currentUser.get();
-    const token = user.getAuthResponse().access_token;
-    console.log("Access Token:", token);
-
-    // अब API इस्तेमाल कर सकते हैं
-    fetchBlogList(token);
-  });
-}
-
-function fetchBlogList(token) {
-  fetch('https://www.googleapis.com/blogger/v3/users/self/blogs', {
-    headers: {
-      Authorization: 'Bearer ' + token,
+function handleGoogleLogin() {
+  google.accounts.oauth2.initTokenClient({
+    client_id: '642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com',
+    scope: 'https://www.googleapis.com/auth/blogger',
+    callback: (response) => {
+      if (response.access_token) {
+        accessToken = response.access_token;
+        console.log("✅ Access Token:", accessToken);
+        fetchBlogIdFromUrl();
+      } else {
+        alert("❌ Failed to get access token.");
+      }
     },
+  }).requestAccessToken();
+}
+
+function fetchBlogIdFromUrl() {
+  const blogUrl = "https://yellowhostgaming01.blogspot.com/";
+
+  fetch(`https://www.googleapis.com/blogger/v3/blogs/byurl?url=${encodeURIComponent(blogUrl)}`, {
+    headers: {
+      Authorization: "Bearer " + accessToken
+    }
   })
     .then(res => res.json())
     .then(data => {
-      console.log("Your Blogs:", data);
-      const blogId = data.items[0].id;
-      console.log("First Blog ID:", blogId);
-
-      // Blogger post create करना
-      createPost(blogId, token);
+      const blogId = data.id;
+      console.log("🆔 Blog ID:", blogId);
+      createPost(blogId);
+    })
+    .catch(err => {
+      console.error("❌ Blog ID fetch error:", err);
     });
 }
 
-function createPost(blogId, token) {
+function createPost(blogId) {
   const postData = {
     title: "Test Post from Generator",
-    content: "<p>This post was created from JS!</p>",
+    content: "<p>This post was created using Google Identity Services!</p>",
   };
 
   fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + accessToken,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(postData),
   })
     .then(res => res.json())
     .then(data => {
-      console.log("Post Created:", data);
-      alert("Post created: " + data.url);
+      console.log("📬 Post Created:", data);
+      alert("✅ Post Created! URL: " + data.url);
     });
 }
