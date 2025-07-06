@@ -157,7 +157,7 @@ const genericData = {
 };
 
 const socialMedias = {
-  insta: [ "https://instagram.com/yellowhostgaming"],
+  insta: [ "https://instagram.com/yellowhostgaming", "https://www.instagram.com/j_k_art_?igsh=OHp0ajFlcXljdXFk", "https://www.instagram.com/king._.nikhil009?igsh=Z3B1eWJucDdtdjRp"],
   yt: ["https://youtube.com/@yellowhostgaming","https://youtube.com/@khodiyarart88", "https://youtube.com/@nikhil0098"],
   gmail: [
     "yellowhostgaming1@gmail.com",
