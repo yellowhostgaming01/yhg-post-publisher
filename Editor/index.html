@@ -92,6 +92,7 @@
               <span></span>
             </div>
             <br />
+
             <div class="Thumbnail">
               <label for="">Post Thumbnail:</label>
 
@@ -108,6 +109,14 @@
               </div>
 
               <span></span>
+            </div>
+
+            <div>
+              <label for="">Mod Type</label>
+              <select id="modType">
+                <option value="assetBased">AssetBased</option>
+                <option value="livery">Livery</option>
+              </select>
             </div>
 
             <center><h2>Mod Details</h2></center>
@@ -144,11 +153,10 @@
                 </button>
               </div>
             </div>
-
             <br />
 
             <div class="mod-details features">
-              <label for="">Mod Features</label><br />
+              <label for="">Mod Features</label>
               <textarea
                 id="Mod-d-features"
                 placeholder="each line represent each features"
@@ -217,17 +225,18 @@
                 + Add Credit Card
               </button>
             </div>
-            <br />
+            <br/>
 
-            <div>
+            <div class="version-section">
               <label for="">For version</label>
               <input
                 type="text"
                 id="version"
-                placeholder="Emply == this is livery mod"
+                placeholder="Emply == V4.3.4"
               />
             </div>
-            <br />
+            <br/>
+
             <div>
               <label for="">Password</label>
               <input
@@ -236,7 +245,8 @@
                 placeholder="Emply == in the video"
               />
             </div>
-            <br />
+            <br/>
+
             <div>
               <label for="">Note(optional):-</label>
               <input
@@ -283,6 +293,7 @@
               </button>
             </div>
             <br />
+
             <div class="btn">
               <input type="reset" value="Clear Form" id="reset" />
               <input

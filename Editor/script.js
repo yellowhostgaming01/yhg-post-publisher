@@ -129,18 +129,18 @@ function OpenDialogInit(event, idElement) {
 function CopyTextArea(idElement) {
   const textarea = document.getElementById(idElement);
   if (textarea) {
-    navigator.clipboard.writeText(textarea.value)
+    navigator.clipboard
+      .writeText(textarea.value)
       .then(() => {
         alert("Code copied");
       })
-      .catch(err => {
+      .catch((err) => {
         alert("Failed to copy: " + err);
       });
   } else {
     alert("Textarea not found");
   }
 }
-
 
 //sm = social media
 function getSafeSM(value) {
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.body.addEventListener("contextmenu", (e) => {
-    // e.preventDefault();
+    e.preventDefault();
   });
 
   var selection = document.querySelectorAll(".contectInfo select[id]");
@@ -187,6 +187,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
+  });
+
+  var modTypeEl = document.getElementById("modType");
+  modTypeEl.addEventListener("change", function (e) {
+    var val = e.target.value;
+    let a = document.querySelector(".version-section");
+    if (val == "assetBased") {
+      a.show();
+    } else if (val == "livery") {
+      a.hide();
+    }
   });
 });
 
@@ -205,8 +216,8 @@ async function createHtml() {
     document.getElementById("postTitle").value || "Untitled Post";
   const thumbnailKey = document.getElementById("Thumbnail").value || "";
   const thumbnail = await getUploadedThumbnailURL(thumbnailKey);
-  const version = document.getElementById("version").value || "";
-  const password = document.getElementById("Password").value || "";
+  const version = document.getElementById("version").value || "V4.3.4";
+  const password = document.getElementById("Password").value || "in the video";
   const noteOp = document.getElementById("noteOp").value || "";
 
   const yt = getSafeSM(document.getElementById("contect-yt").value);
@@ -243,12 +254,13 @@ async function createHtml() {
   }
 
   html += `    <h3>Features:</h3>\n    <div class="mod-features">\n      <ul>\n`;
+
   const features = document.getElementById("Mod-d-features").value;
   features.split("\n").forEach((f) => {
     if (f.trim()) html += `        <li>${f}</li>\n`;
   });
-  html += `      </ul>\n    </div>\n  </div>\n\n`;
 
+  html += `      </ul>\n    </div>\n  </div>\n\n`;
   html += `  <div class="section-container contact-info-section">\n    <h3>Contact Info:</h3>\n`;
   html += `    <p><strong>Join our WhatsApp Group:</strong> <a href="${whatsappGroup}" target="_blank">Click here to join</a></p>\n`;
   html += `    <p><strong>Follow us on Instagram:</strong> <a href="${insta}" target="_blank">Click here to follow</a></p>\n`;
@@ -270,7 +282,8 @@ async function createHtml() {
   });
   html += `    <p class="bussid-mod-credit-thanks">A special thanks to our supportive public</p>\n  </div>\n\n`;
 
-  html += `  <div class="mod-version-unique">Mod Version: <span>${version}</span></div>\n\n`;
+  if (version)
+    html += `  <div class="mod-version-unique">Mod Version: <span>${version}</span></div>\n\n`;
 
   html += `  <div class="bussid-mod-download-button">\n`;
   data.videolink.forEach((v) => {
@@ -283,14 +296,10 @@ async function createHtml() {
   html += `  </div>\n\n`;
 
   html += `  <div class="bussid-mod-section-container bussid-mod-instructions">\n    <h3 class="bussid-mod-header">Installation Instructions:</h3>\n`;
-  html += `    <p>1. Extract the zip file to a folder.</p>\n    <p>2. Select the files you wish to add.</p>\n    <p>3. Copy or Cut the selected files.</p>\n    <p>4. Navigate to <strong>Android > obb > com.maleo.bussimulatorid > assets > bin > data</strong>.</p>\n`;
-  html += `    <p>5. Paste the files into the designated folder.</p>\n`;
-  html += `    <p><strong>Note:</strong> This mod works with version ${
-    version || "v4.3.4 Only"
-  }</p>\n`;
+  html += modType[document.getElementById("modType").value].instructions;
+  if (noteOp) html += `    <p><strong>Note:</strong> ${noteOp}</p>\n`;
   if (password)
     html += `    <p><strong>Password:</strong> <span class="yhg-password-copy">${password}</span></p>\n`;
-  if (noteOp) html += `    <p><strong>Note:</strong> ${noteOp}</p>\n`;
   html += `  </div>\n\n`;
 
   data.extraSection.forEach((sec) => {
@@ -318,8 +327,6 @@ async function createHtml() {
 
 async function getUploadedThumbnailURL(key) {
   const file = FilesKVP.get(key);
-  if (!file) return null;
-
   // Check if it's a file from dialog (not a URL)
   if (!key.includes("_yhg_load_init_")) {
     return key; // already URL
