@@ -127,9 +127,20 @@ function OpenDialogInit(event, idElement) {
 }
 
 function CopyTextArea(idElement) {
-  navigator.clipboard.writeText(previewDiv.innerText);
-  alert("Code copied");
+  const textarea = document.getElementById(idElement);
+  if (textarea) {
+    navigator.clipboard.writeText(textarea.value)
+      .then(() => {
+        alert("Code copied");
+      })
+      .catch(err => {
+        alert("Failed to copy: " + err);
+      });
+  } else {
+    alert("Textarea not found");
+  }
 }
+
 
 //sm = social media
 function getSafeSM(value) {
