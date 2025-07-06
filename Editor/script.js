@@ -6,6 +6,7 @@ const globalData = {
   downloadLink: [],
   extraSection: [],
 };
+const previewDiv = document.getElementById("previewCode");
 
 const FilesKVP = new Map();
 
@@ -125,6 +126,24 @@ function OpenDialogInit(event, idElement) {
   event.target.remove();
 }
 
+function CopyTextArea(idElement) {
+  navigator.clipboard.writeText(previewDiv.innerText);
+  alert("Code copied");
+}
+
+//sm = social media
+function getSafeSM(value) {
+  var a = value.split("-");
+  var type = a[0],
+    index = a[1];
+  var data = socialMedias[type][index - 1];
+  if (data) {
+    return data;
+  } else {
+    return "#";
+  }
+}
+
 var html = "";
 document.addEventListener("DOMContentLoaded", function () {
   var reset = document.getElementById("reset");
@@ -140,12 +159,32 @@ document.addEventListener("DOMContentLoaded", function () {
   createhtml.addEventListener("click", function () {
     createHtml();
   });
+
+  document.body.addEventListener("contextmenu", (e) => {
+    // e.preventDefault();
+  });
+
+  var selection = document.querySelectorAll(".contectInfo select[id]");
+
+  selection.forEach(function (el, i) {
+    el.addEventListener("change", function () {
+      var selectedIndex = el.selectedIndex;
+
+      for (let j = i + 1; j < selection.length; j++) {
+        if (selection[j].options.length > selectedIndex) {
+          selection[j].selectedIndex = selectedIndex;
+        }
+      }
+    });
+  });
 });
 
 function resetF() {
   Object.keys(globalData).forEach(function (d, i) {
     _("#" + d + "-list").html("");
   });
+
+  previewDiv.innerText = "";
 }
 
 async function createHtml() {
@@ -159,17 +198,14 @@ async function createHtml() {
   const password = document.getElementById("Password").value || "";
   const noteOp = document.getElementById("noteOp").value || "";
 
-  const yt =
-    document.getElementById("contect-yt").value ||
-    "https://youtube.com/@yellowhostgaming";
-  const insta =
-    document.getElementById("contect-insta").value ||
-    "https://instagram.com/yellowhostgaming";
-  const email =
-    document.getElementById("contect-email").value ||
-    "yellowhostgaming1@gmail.com";
+  const yt = getSafeSM(document.getElementById("contect-yt").value);
+  const insta = getSafeSM(document.getElementById("contect-insta").value);
+  const gmail = getSafeSM(document.getElementById("contect-gmail").value);
+  const whatsappGroup = getSafeSM(
+    document.getElementById("contect-whatsappGroup").value
+  );
 
-  let html = `<body class="bussid-mod-body">\n`;
+  html = `<body class="bussid-mod-body">\n`;
 
   html += `  <div class="mod-image">\n`;
   html += `    <img src="${thumbnail}" alt="${postTitle}" />\n`;
@@ -203,9 +239,9 @@ async function createHtml() {
   html += `      </ul>\n    </div>\n  </div>\n\n`;
 
   html += `  <div class="section-container contact-info-section">\n    <h3>Contact Info:</h3>\n`;
-  html += `    <p><strong>Join our WhatsApp Group:</strong> <a href="#" target="_blank">Click here to join</a></p>\n`;
-  html += `    <p><strong>Follow us on Instagram:</strong> <a href="${insta}" target="_blank">${insta}</a></p>\n`;
-  html += `    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>\n  </div>\n\n`;
+  html += `    <p><strong>Join our WhatsApp Group:</strong> <a href="${whatsappGroup}" target="_blank">Click here to join</a></p>\n`;
+  html += `    <p><strong>Follow us on Instagram:</strong> <a href="${insta}" target="_blank">Click here to follow</a></p>\n`;
+  html += `    <p><strong>Email:</strong> <a href="mailto:${gmail}">${gmail}</a></p>\n  </div>\n\n`;
 
   html += `  <div class="bussid-mod-section-container bussid-mod-demo-version">\n    <h3 class="bussid-mod-header">Credit</h3>\n`;
   data.creditRole.forEach((c) => {
@@ -265,8 +301,6 @@ async function createHtml() {
   html += `    <p>Don't modify its files, strictly prohibited.</p>\n  </div>\n\n`;
 
   html += `  <div class="bussid-mod-footer-mod">\n    <p>Thank you for your support! 🌟</p>\n  </div>\n</body>`;
-
-  const previewDiv = document.getElementById("previewCode");
   previewDiv.innerText = html;
   previewDiv.style.display = "block";
 }
@@ -294,64 +328,70 @@ async function getUploadedThumbnailURL(key) {
   }
 }
 
-
-
-const CLIENT_ID = '642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/blogger';
-
-let tokenClient;
-let accessToken = '';
+const CLIENT_ID =
+  "642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com";
+let accessToken = "";
 
 function handleGoogleLogin() {
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope: SCOPES,
-    prompt: 'consent',
-    callback: (tokenResponse) => {
-      if (tokenResponse.access_token) {
-        accessToken = tokenResponse.access_token;
-        document.getElementById('output').innerText = "✅ Access Token received.";
-        fetchBlogs(); // yahi se kaam aage badhega
-      } else {
-        alert('Token not received.');
-      }
-    },
-  });
-
-  tokenClient.requestAccessToken();
+  google.accounts.oauth2
+    .initTokenClient({
+      client_id:
+        "642329332512-0qif0ia19d8ccgudfpjvd2u8snc3l3fn.apps.googleusercontent.com",
+      scope: "https://www.googleapis.com/auth/blogger",
+      callback: (response) => {
+        if (response.access_token) {
+          accessToken = response.access_token;
+          console.log("✅ Access Token:", accessToken);
+          fetchBlogIdFromUrl();
+        } else {
+          alert("❌ Failed to get access token.");
+        }
+      },
+    })
+    .requestAccessToken();
 }
 
-function fetchBlogs() {
-  fetch('https://www.googleapis.com/blogger/v3/users/self/blogs', {
-    headers: {
-      Authorization: 'Bearer ' + accessToken,
-    },
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Your Blogs:", data);
-      const blogId = data.items[0].id;
+function fetchBlogIdFromUrl() {
+  const blogUrl = "https://yellowhostgaming01.blogspot.com/";
+
+  fetch(
+    `https://www.googleapis.com/blogger/v3/blogs/byurl?url=${encodeURIComponent(
+      blogUrl
+    )}`,
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      const blogId = data.id;
+      console.log("🆔 Blog ID:", blogId);
       createPost(blogId);
+    })
+    .catch((err) => {
+      console.error("❌ Blog ID fetch error:", err);
     });
 }
 
 function createPost(blogId) {
   const postData = {
-    title: "🚀 Test Post via Google Identity Services",
-    content: "<p>This post was published using the new GIS method.</p>",
+    title: "Test Post from Generator",
+    content: "<p>This post was created using Google Identity Services!</p>",
   };
 
   fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Authorization: 'Bearer ' + accessToken,
-      'Content-Type': 'application/json',
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(postData),
   })
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ Post Created:", data);
-      alert("📢 Post created: " + data.url);
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("📬 Post Created:", data);
+      alert("✅ Post Created! URL: " + data.url);
     });
 }

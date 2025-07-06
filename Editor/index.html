@@ -161,34 +161,46 @@
               <h2>Contect Info</h2>
             </center>
 
-            <div class="contectInfo youtube">
-              <label for="">Enter your yt Channel</label
-              ><input
-                type="text"
-                placeholder="Emply == yhg yt channel"
-                id="contect-yt"
-              />
+            <div class="contectInfo">
+              <label for="">Select your yt Channel</label>
+              <select id="contect-yt">
+                <option value="yt-1">Yellow Host Gaming</option>
+                <option value="yt-2">Jai_Khodiyar_Art</option>
+                <option value="yt-3">Nikhil_009</option>
+              </select>
               <span></span>
             </div>
             <br />
 
-            <div class="contectInfo instagram">
-              <label for="">Enter your yt Channel</label>
-              <input
-                type="text"
-                id="contect-insta"
-                placeholder="Emply == yhg yt insta"
-              /><span></span>
+            <div class="contectInfo">
+              <label for="">Select your Instagram id</label>
+              <select id="contect-insta">
+                <option value="insta-1">Yellow Host Gaming</option>
+                <option value="insta-2">Jai_Khodiyar_Art</option>
+                <option value="insta-3">Nikhil_009</option>
+              </select>
+              <span></span>
             </div>
             <br />
 
-            <div class="contectInfo email">
-              <label for="">Enter Email</label
-              ><input
-                type="text"
-                id="contect-email"
-                placeholder="Emply == yhg email"
-              /><span></span>
+            <div class="contectInfo">
+              <label for="">Select Email</label
+              ><select id="contect-gmail">
+                <option value="gmail-1">Yellow Host Gaming</option>
+                <option value="gmail-2">Jai_Khodiyar_Art</option>
+                <option value="gmail-3">Nikhil_009</option>
+              </select>
+              <span></span>
+            </div>
+            <br />
+
+            <div class="contectInfo">
+              <label for="">Select WhatsApp group</label
+              ><select id="contect-whatsappGroup">
+                <option value="whatsappGroup-1">Yellow Host Gaming</option>
+                <option value="whatsappGroup-2">Jai_Khodiyar_Art</option>
+                <option value="whatsappGroup-3">Nikhil_009</option>
+              </select><span></span>
             </div>
             <br />
 
@@ -277,19 +289,26 @@
                 type="button"
                 value="upload post as publish"
                 id="publish"
-                onclick="handleGoogleLogin()"
+                class="d-n"
               />
               <input
                 type="button"
                 value="upload post as archive"
                 id="publishArchive"
+                class="d-n"
               />
               <input
                 type="button"
                 value="Create & get Code"
                 id="createHtml"
               /><br />
-              <input type="button" value="Preview Post" id="preview" />
+              <input
+                type="button"
+                value="Preview Post"
+                id="preview"
+                class="d-n"
+              />
+              <div></div>
               <div class="upload-html" style="display: none">
                 <input
                   type="button"
@@ -307,20 +326,13 @@
               </div>
             </div>
             <br />
-            <div
-              id="previewCode"
-              style="
-                border: 1px solid;
-                width: 100%;
-                height: 150px;
-                background-color: white;
-                overflow-y: scroll;
-                color: #000;
-                display: none;
-              "
-              contenteditable
-            ></div>
-            <br />
+            <div class="icon-input-wrapper pos-top-right">
+              <i
+                class="opf-file_copy opf"
+                onclick="CopyTextArea('previewCode')"
+              ></i>
+              <textarea name="" readonly="readonly" id="previewCode"></textarea>
+            </div>
           </form>
         </div>
       </div>

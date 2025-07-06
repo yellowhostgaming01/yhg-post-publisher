@@ -20,7 +20,7 @@ a {
 }
 
 body {
-  background: url("Screenshot\ 2025-05-04\ 170651.png") no-repeat;
+  background: url("30c03d6f-a752-419e-bc5e-9b29d8ebb9a4.webp") no-repeat;
   background-attachment: fixed;
   color: #fff;
   user-select: none;
@@ -33,18 +33,16 @@ body {
   display: none;
 }
 
-/* .scrollbar-needed::-webkit-scrollbar {
-  background-color: #e1e1e1;
-  display: block;
-  height: 10px;
-  border-radius: 8px;
+@media screen and (min-width: 426px) and (max-width:1024px) {
+  body{
+    background-image: url("tablet.jpg");
+  }
 }
-
-.scrollbar-needed::-webkit-scrollbar-thumb {
-  background-color: #757575;
-  border-radius: 8px;
-} */
-
+@media screen and (min-width: 320px) and (max-width: 425px) {
+  body{
+    background-image: url("mobile.jpeg");
+  }
+}
 .scriptmaker {
   margin: auto auto auto auto;
   width: calc(100% - 10%);
@@ -85,7 +83,8 @@ label {
 
 input[type="text"],
 input[type="number"],
-input[type="date"], textarea {
+input[type="date"],
+textarea,select {
   width: calc(100% - 14px);
   padding: 7px;
   color: #e900ff;
@@ -99,7 +98,12 @@ input[type="date"], textarea {
   transition: var(--transition);
 }
 
-textarea{
+select{
+  width: 100%;
+  height: unset;
+}
+
+textarea {
   width: calc(100% - (7px + 7px));
   height: 115px;
   resize: none;
@@ -168,12 +172,46 @@ textarea:hover {
 }
 
 /* Center Positions */
-.pos-right i     { right: 14px; top: 50%; }
-.pos-left i      { left: 14px; top: 50%; }
-.pos-top-right i { right: 14px; top: 10px; transform: none; }
-.pos-top-left i  { left: 14px; top: 10px; transform: none; }
-.pos-bottom-right i { right: 14px; bottom: 10px; top: auto; transform: none; }
-.pos-bottom-left i  { left: 14px; bottom: 10px; top: auto; transform: none; }
+.pos-right i {
+  right: 14px;
+  top: 50%;
+}
+.pos-left i {
+  left: 14px;
+  top: 50%;
+}
+.pos-top-right i {
+  right: 14px;
+  top: 10px;
+  transform: none;
+}
+.pos-top-left i {
+  left: 14px;
+  top: 10px;
+  transform: none;
+}
+.pos-bottom-right i {
+  right: 14px;
+  bottom: 10px;
+  top: auto;
+  transform: none;
+}
+.pos-bottom-left i {
+  left: 14px;
+  bottom: 10px;
+  top: auto;
+  transform: none;
+}
+
+.d-n {
+  display: none;
+}
+
+.d-def {
+  display: inline-block;
+}
+
+.d-b{ display: block;}
 
 /* Hover Effect */
 @media (hover: hover) and (pointer: fine) {
@@ -182,7 +220,6 @@ textarea:hover {
     color: #00f2ff;
   }
 }
-
 
 .yhg-card,
 .contributor-card,
@@ -195,7 +232,6 @@ textarea:hover {
   box-shadow: var(--box-shadow);
   transition: var(--transition);
 }
-
 
 .yhg-card input,
 .yhg-card textarea,
@@ -229,7 +265,6 @@ button,
   transition: var(--transition);
   box-shadow: 0 0 10px rgba(255, 0, 93, 0.4);
 }
-
 
 .remove-btn:hover,
 button:hover,

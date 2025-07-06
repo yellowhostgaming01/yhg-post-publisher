@@ -107,8 +107,8 @@ const genericData = {
       },
     ],
   },
-  downloadLink:{
-     title: "Download Link",
+  downloadLink: {
+    title: "Download Link",
     containerClass: "contributor-card",
     children: [
       {
@@ -142,7 +142,7 @@ const genericData = {
       {
         tag: "input",
         type: "checkbox",
-        label: "Show Thanks Message",
+        label: "Add htmlContent",
         key: "includeHtmlToggle",
         toggleTarget: "includedHtml",
       },
@@ -153,5 +153,20 @@ const genericData = {
         showOnToggle: "includeHtmlToggle",
       },
     ],
-  }
+  },
+};
+
+const socialMedias = {
+  insta: [ "https://instagram.com/yellowhostgaming"],
+  yt: ["https://youtube.com/@yellowhostgaming","https://youtube.com/@khodiyarart88", "https://youtube.com/@nikhil0098"],
+  gmail: [
+    "yellowhostgaming1@gmail.com",
+    "rohanpatel267774@gmail.com",
+    "nikhilmadhavani09@gmail.com"
+  ],
+  whatsappGroup: [
+    "https://chat.whatsapp.com/LbOJrGDWGuqLtygEZQU9uj",
+    "https://chat.whatsapp.com/IwlLsyVFH4ILo1BAcLCZMr",
+    "#"
+  ]
 };
