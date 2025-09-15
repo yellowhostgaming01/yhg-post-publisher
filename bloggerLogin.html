@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogger Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+      }
+      body {
+        background-color: #121212;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        width: 100%;
+        max-width: 400px;
+        padding: 24px;
+        background-color: #1e1e1e;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        text-align: center;
+      }
+      .title {
+        font-size: 28px;
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 24px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+      }
+      .btn {
+        width: 100%;
+        padding: 14px 0;
+        margin: 10px 0;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #fff;
+      }
+      .btn-google {
+        background-color: #4285f4;
+        box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+      }
+      .btn-google:hover {
+        background-color: #357ae8;
+      }
+      .btn-fetch {
+        background-color: #ff5722;
+        box-shadow: 0 4px 8px rgba(255, 87, 34, 0.4);
+      }
+      .btn-fetch:hover {
+        background-color: #e64a19;
+      }
+      .btn-save {
+        background-color: #4caf50;
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+      }
+      .btn-save:hover {
+        background-color: #43a047;
+      }
+      .disabled-btn {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .blog-list {
+        margin: 20px 0;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        padding: 8px;
+      }
+      .blog-item {
+        padding: 10px;
+        background-color: #1e1e1e;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .blog-item:hover {
+        background-color: #333333;
+      }
+      .blog-item.selected {
+        background-color: #ff5722;
+        color: #fff;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Blogger Login</div>
+      <button class="btn btn-google" id="googleSignInBtn">Sign in with Google</button>
+      <button id="fetchBtn" class="btn btn-fetch disabled-btn" disabled>
+        Fetch My Blogs
+      </button>
+
+      <div class="blog-list" id="blogsContainer">
+        <div class="blog-item">Example Blog 1</div>
+        <div class="blog-item">Example Blog 2</div>
+        <div class="blog-item">Example Blog 3</div>
+        <div class="blog-item">Example Blog 4</div>
+        <div class="blog-item">Example Blog 5</div>
+      </div>
+
+      <button id="saveBtn" class="btn btn-save disabled-btn" disabled>
+        Save Selected Blog
+      </button>
+    </div>
+
+<script>
+const CLIENT_ID = "YOUR_WEB_CLIENT_ID.apps.googleusercontent.com";
+const REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"; // ya localhost
+const SCOPE = "https://www.googleapis.com/auth/blogger";
+
+// Sign in
+document.getElementById('googleSignInBtn').addEventListener('click', () => {
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}&prompt=select_account`;
+    // Open popup
+    const width = 500, height = 600;
+    const left = (screen.width/2)-(width/2);
+    const top = (screen.height/2)-(height/2);
+    const win = window.open(authUrl, "GoogleSignIn", `width=${width},height=${height},top=${top},left=${left}`);
+
+    // Polling for access token
+    const timer = setInterval(() => {
+        try {
+            if(win.location.href.indexOf(REDIRECT_URI) != -1){
+                const hash = win.location.hash.substring(1); // #access_token=xxx...
+                const params = new URLSearchParams(hash);
+                const token = params.get('access_token');
+                if(token){
+                    clearInterval(timer);
+                    win.close();
+                    onSignInSuccess(token);
+                }
+            }
+        } catch(e) {}
+    }, 500);
+});
+
+function onSignInSuccess(token){
+    console.log("Access Token:", token);
+    document.getElementById('fetchBtn').disabled = false;
+    document.getElementById('fetchBtn').classList.remove('disabled-btn');
+
+    // Fetch blogs example
+    document.getElementById('fetchBtn').addEventListener('click', () => {
+        fetch("https://www.googleapis.com/blogger/v3/users/self/blogs", {
+            headers: { Authorization: "Bearer " + token }
+        })
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('blogsContainer');
+            container.innerHTML = "";
+            data.items.forEach(blog => {
+                const div = document.createElement('div');
+                div.className = "blog-item";
+                div.textContent = blog.name;
+                div.dataset.id = blog.id;
+                div.addEventListener('click', () => {
+                    document.querySelectorAll('.blog-item').forEach(i=>i.classList.remove('selected'));
+                    div.classList.add('selected');
+                    const saveBtn = document.getElementById('saveBtn');
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('disabled-btn');
+                });
+                container.appendChild(div);
+            });
+        });
+    });
+}
+</script>
+
+
+    <script>
+      const blogItems = document.querySelectorAll('.blog-item');
+      const saveBtn = document.getElementById('saveBtn');
+      const btnSign = document.querySelector(".btn-google");
+      btnSign.addEventListener('click', ()=>{
+
+      })
+      blogItems.forEach(item => {
+          item.addEventListener('click', () => {
+              // Deselect all first
+              blogItems.forEach(i => i.classList.remove('selected'));
+              // Select current
+              item.classList.add('selected');
+              // Enable save button
+              saveBtn.classList.remove('disabled-btn');
+              saveBtn.disabled = false;
+          });
+      });
+    </script>
+  </body>
+</html>
