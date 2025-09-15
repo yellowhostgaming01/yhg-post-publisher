@@ -216,8 +216,27 @@
         const selected = document.querySelector(".blog-item.selected");
         if (selected) {
           const blogName = selected.textContent; // Blog ka naam
-          const blogId = selected.dataset.id; // Agar API se id set ki ho
-          Android.SaveLoginInfo(blogId, tokenMain);
+          const blogId = selected.dataset.id; // Blog ID
+          const data = {
+            token: tokenMain, // global variable me store token
+            blogId: blogId,
+          };
+          const jsonStr = JSON.stringify(data, null, 2);
+
+          // JSON download karne ka logic
+          const blob = new Blob([jsonStr], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "yhg_web_token.json";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          alert("Blog data saved as JSON!");
+        } else {
+          alert("Please select a blog first!");
         }
       });
     </script>
