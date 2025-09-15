@@ -119,7 +119,23 @@
         Save Selected Blog
       </button>
     </div>
+<script>
+window.addEventListener('load', () => {
+    const hash = window.location.hash.substring(1); // remove #
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+    if(token){
+        console.log("Token found:", token);
+        // enable fetch button
+        const fetchBtn = document.getElementById('fetchBtn');
+        fetchBtn.disabled = false;
+        fetchBtn.classList.remove('disabled-btn');
 
+        // save in global variable
+        window.tokenMain = token;
+    }
+});
+</script>
     <script>
       const CLIENT_ID =
         "642329332512-9ps67ms3shb4ji18gs801ddqkihht3j5.apps.googleusercontent.com";
@@ -242,3 +258,4 @@
     </script>
   </body>
 </html>
+
