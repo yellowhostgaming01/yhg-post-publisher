@@ -125,14 +125,8 @@ window.addEventListener('load', () => {
     const params = new URLSearchParams(hash);
     const token = params.get('access_token');
     if(token){
-        console.log("Token found:", token);
         // enable fetch button
-        const fetchBtn = document.getElementById('fetchBtn');
-        fetchBtn.disabled = false;
-        fetchBtn.classList.remove('disabled-btn');
-
-        // save in global variable
-        window.tokenMain = token;
+      onSignInSuccess(token);
     }
 });
 </script>
@@ -258,4 +252,5 @@ window.addEventListener('load', () => {
     </script>
   </body>
 </html>
+
 
