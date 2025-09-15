@@ -100,7 +100,9 @@
   <body>
     <div class="container">
       <div class="title">Blogger Login</div>
-      <button class="btn btn-google" id="googleSignInBtn">Sign in with Google</button>
+      <button class="btn btn-google" id="googleSignInBtn">
+        Sign in with Google
+      </button>
       <button id="fetchBtn" class="btn btn-fetch disabled-btn" disabled>
         Fetch My Blogs
       </button>
@@ -118,88 +120,105 @@
       </button>
     </div>
 
-<script>
-const CLIENT_ID = "642329332512-9ps67ms3shb4ji18gs801ddqkihht3j5.apps.googleusercontent.com";
-const REDIRECT_URI = "https://yellowhostgaming01.github.io/yhg-post-publisher/bloggerLogin.html"; // ya localhost
-const SCOPE = "https://www.googleapis.com/auth/blogger";
+    <script>
+      const CLIENT_ID =
+        "642329332512-9ps67ms3shb4ji18gs801ddqkihht3j5.apps.googleusercontent.com";
+      const REDIRECT_URI =
+        "https://yellowhostgaming01.github.io/yhg-post-publisher/bloggerLogin.html"; // ya localhost
+      const SCOPE = "https://www.googleapis.com/auth/blogger";
+      var tokenMain = "";
 
-// Sign in
-document.getElementById('googleSignInBtn').addEventListener('click', () => {
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}&prompt=select_account`;
-    // Open popup
-    const width = 500, height = 600;
-    const left = (screen.width/2)-(width/2);
-    const top = (screen.height/2)-(height/2);
-    const win = window.open(authUrl, "GoogleSignIn", `width=${width},height=${height},top=${top},left=${left}`);
+      // Sign in
+      document
+        .getElementById("googleSignInBtn")
+        .addEventListener("click", () => {
+          const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}&prompt=select_account`;
+          // Open popup
+          const width = 500,
+            height = 600;
+          const left = screen.width / 2 - width / 2;
+          const top = screen.height / 2 - height / 2;
+          const win = window.open(
+            authUrl,
+            "GoogleSignIn",
+            `width=${width},height=${height},top=${top},left=${left}`
+          );
 
-    // Polling for access token
-    const timer = setInterval(() => {
-        try {
-            if(win.location.href.indexOf(REDIRECT_URI) != -1){
+          // Polling for access token
+          const timer = setInterval(() => {
+            try {
+              if (win.location.href.indexOf(REDIRECT_URI) != -1) {
                 const hash = win.location.hash.substring(1); // #access_token=xxx...
                 const params = new URLSearchParams(hash);
-                const token = params.get('access_token');
-                if(token){
-                    clearInterval(timer);
-                    win.close();
-                    onSignInSuccess(token);
+                const token = params.get("access_token");
+                if (token) {
+                  clearInterval(timer);
+                  win.close();
+                  onSignInSuccess(token);
                 }
-            }
-        } catch(e) {}
-    }, 500);
-});
+              }
+            } catch (e) {}
+          }, 500);
+        });
 
-function onSignInSuccess(token){
-    console.log("Access Token:", token);
-    document.getElementById('fetchBtn').disabled = false;
-    document.getElementById('fetchBtn').classList.remove('disabled-btn');
+      function onSignInSuccess(token) {
+        tokenMain = token;
+        document.getElementById("fetchBtn").disabled = false;
+        document.getElementById("fetchBtn").classList.remove("disabled-btn");
 
-    // Fetch blogs example
-    document.getElementById('fetchBtn').addEventListener('click', () => {
-        fetch("https://www.googleapis.com/blogger/v3/users/self/blogs", {
-            headers: { Authorization: "Bearer " + token }
-        })
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('blogsContainer');
-            container.innerHTML = "";
-            data.items.forEach(blog => {
-                const div = document.createElement('div');
+        // Fetch blogs example
+        document.getElementById("fetchBtn").addEventListener("click", () => {
+          fetch("https://www.googleapis.com/blogger/v3/users/self/blogs", {
+            headers: { Authorization: "Bearer " + token },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const container = document.getElementById("blogsContainer");
+              container.innerHTML = "";
+              data.items.forEach((blog) => {
+                const div = document.createElement("div");
                 div.className = "blog-item";
                 div.textContent = blog.name;
                 div.dataset.id = blog.id;
-                div.addEventListener('click', () => {
-                    document.querySelectorAll('.blog-item').forEach(i=>i.classList.remove('selected'));
-                    div.classList.add('selected');
-                    const saveBtn = document.getElementById('saveBtn');
-                    saveBtn.disabled = false;
-                    saveBtn.classList.remove('disabled-btn');
+                div.addEventListener("click", () => {
+                  document
+                    .querySelectorAll(".blog-item")
+                    .forEach((i) => i.classList.remove("selected"));
+                  div.classList.add("selected");
+                  const saveBtn = document.getElementById("saveBtn");
+                  saveBtn.disabled = false;
+                  saveBtn.classList.remove("disabled-btn");
                 });
                 container.appendChild(div);
+              });
             });
         });
-    });
-}
-</script>
-
+      }
+    </script>
 
     <script>
-      const blogItems = document.querySelectorAll('.blog-item');
-      const saveBtn = document.getElementById('saveBtn');
+      const blogItems = document.querySelectorAll(".blog-item");
+      const saveBtn = document.getElementById("saveBtn");
       const btnSign = document.querySelector(".btn-google");
-      btnSign.addEventListener('click', ()=>{
+      blogItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          // Deselect all first
+          blogItems.forEach((i) => i.classList.remove("selected"));
+          // Select current
+          item.classList.add("selected");
+          // Enable save button
+          saveBtn.classList.remove("disabled-btn");
+          saveBtn.disabled = false;
+        });
+      });
 
-      })
-      blogItems.forEach(item => {
-          item.addEventListener('click', () => {
-              // Deselect all first
-              blogItems.forEach(i => i.classList.remove('selected'));
-              // Select current
-              item.classList.add('selected');
-              // Enable save button
-              saveBtn.classList.remove('disabled-btn');
-              saveBtn.disabled = false;
-          });
+      saveBtn.addEventListener("click", function () {
+        const selected = document.querySelector(".blog-item.selected");
+        if (selected) {
+          const blogName = selected.textContent; // Blog ka naam
+          const blogId = selected.dataset.id; // Agar API se id set ki ho
+          Android.SaveLoginInfo(blogId, tokenMain);
+        }
       });
     </script>
   </body>
