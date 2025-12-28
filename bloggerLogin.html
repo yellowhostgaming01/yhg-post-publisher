@@ -118,6 +118,10 @@
       <button id="saveBtn" class="btn btn-save disabled-btn" disabled>
         Save Selected Blog
       </button>
+      <button id="privacyBtn" class="btn btn-google">
+  Privacy Policy
+</button>
+
     </div>
 <script>
 window.addEventListener('load', () => {
@@ -129,6 +133,11 @@ window.addEventListener('load', () => {
       onSignInSuccess(token);
     }
 });
+  document.getElementById("privacyBtn").addEventListener("click", () => {
+  const PRIVACY_POLICY_URL = "https://yellowhostgaming01.github.io/yhg-post-publisher/privacy_policy.html";
+  window.open(PRIVACY_POLICY_URL, "_blank");
+});
+
 </script>
     <script>
       const CLIENT_ID =
@@ -253,6 +262,7 @@ window.addEventListener('load', () => {
     </script>
   </body>
 </html>
+
 
 
 
